@@ -1,0 +1,145 @@
+#preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  background-color:#000000;
+}
+
+#preloader #preloader-inner {
+  display: block;
+  position: relative;
+  left: 50%;
+  top: 50%;
+  width: 150px;
+  height: 150px;
+  margin: -75px 0 0 -75px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: #3498db;
+  animation: spin 2s linear infinite
+}
+
+#preloader #preloader-inner:before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: #e74c3c;
+  animation: spin 3s linear infinite
+}
+
+#preloader #preloader-inner:after {
+  content: "";
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: #f9c922;
+  animation: spin 1.5s linear infinite
+}
+@keyframes 
+spin { 0% {
+transform:rotate(0deg)
+}
+
+to { transform: rotate(1turn) }
+}
+
+
+.index-body {
+  background: url("http://localhost:8080/cms/img/iit_bg.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.logo-wrapper{
+  background-color: white;
+  background-image: none !important;
+  margin-bottom: 15px !important;
+}
+#icon{
+  text-shadow: none;
+  font-size: 18px;
+  color: rgb(255, 179, 48);
+  height: 30px; width: 30px;
+  line-height: 30px; border-radius: 100%;
+  align-content: center;
+  text-align: center;
+  background-color: rgb(21, 48, 69);
+}
+
+.heading{
+  font-weight: bold;
+  color: #FFFFFF;
+}
+
+.my-footer{
+  position:fixed !important;
+  left:0px;
+  bottom:0px;
+  height:30px;
+  width:100%;
+  background:#072e6e;
+  color: white;
+}
+
+#login, #changepassword, #account{
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 150px !important;
+}
+
+#student_list, #course_list, #teacher_list, #discussion_list, #marks_entry, #deadline{
+  margin-top: 70px !important;
+  overflow: hidden !important;
+}
+
+
+.toast-top-right{
+  position: fixed !important;
+  left: 50% !important;
+  right: 50% !important;
+  top: 50% !important;
+  margin-left: -150px !important;
+}
+
+.course_description{
+  height: 150px !important;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+#numbersheet{
+  overflow-x: scroll;
+  overflow-y: scroll;
+}
+
+.no_student{
+  color: white !important;
+}
+
+.table td, .table th {
+  vertical-align: middle !important; 
+}
+
+textarea{
+  overflow: auto !important;
+}
+
+#answers{
+  padding-left: 20px;
+  padding-top: 5px;
+}
