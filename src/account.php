@@ -2,12 +2,15 @@
 <html lang="en">
 
 <head>
+
     <!-- Required meta tags always come first -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>CMS | IITDU | Course</title>
+    <title>CMS | IITDU</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+
+    <!-- CSS -->
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -20,113 +23,110 @@
 
 </head>
 
-<body>
+<body class="fixed-sn blue-skin index-body">
 
-	<div class="container">
-		<section class="section">
+    <?php
 
-		    <div class="row">
+        session_start();
 
-		        <!--First column-->
-		        <div class="col-sm-8 col-md-8 offset-sm-2 offset-md-2">
+        if (!isset($_SESSION['login_id'])) {
+            header ("Location: http://localhost:8080/cms/login.php");
+        }
 
-		            <!--Rotating card-->
-		            <div class="card-wrapper">
-		                <div id="card-1" class="card-rotating effect__click">
+    ?>
 
-		                    <!--Front Side-->
-		                    <div class="face front">
+    <?php
 
-		                        <!-- Image-->
-		                        <div class="card-up">
-		                            <img src="http://mdbootstrap.com/images/regular/nature/img%20(55).jpg">
-		                        </div>
-		                        <br>
-		                        <!--Content-->
-		                        <div class="card-block">
-		                            <h3><strong>User Name</strong></h3>
-		                            <h4>User profession</h4>
-		                            <!--Triggering button-->
-		                            <a class="rotate-btn" data-card="card-1"><i class="fa fa-repeat"></i> Click here to rotate</a>
-		                        </div>
-		                    </div>
-		                    <!--/.Front Side-->
+        include 'connect/connect.php';
+        include 'header/header.php';
 
-		                    <!--Back Side-->
-		                    <div class="face back">
-
-		                        <!--Content-->
-		                        <h4><strong>About User</strong></h4>
-		                        <hr>
-		                        <p>some basic introduction ..</p>
-		                        <hr>
-		                        
-		                        <div class="table-responsive">
-		                        	<table class="table">
-		                        	    <thead>
-		                        	       
-		                        	    </thead>
-
-		                        	    <tbody>
-
-		                        	        <tr>
-		                        	            <td>Full name</td>
-		                        	            <td>
-		                        	                <a class="teal-text"><i class="fa fa-pencil"></i></a>
-		                        	            </td>
-		                        	        </tr>
-
-		                        	        <tr>
-		                        	            <td>Contact number</td>
-		                        	            <td>
-		                        	                <a class="teal-text"><i class="fa fa-pencil"></i></a>
-		                        	            </td>
-		                        	        </tr>
-
-		                        	        <tr>
-		                        	            <td>Email address</td>
-		                        	            <td>
-		                        	                <a class="teal-text"><i class="fa fa-pencil"></i></a>
-		                        	            </td>
-		                        	        </tr>
-
-		                        	        <tr>
-		                        	            <td>Website address</td>
-		                        	            <td>
-		                        	                <a class="teal-text"><i class="fa fa-pencil"></i></a>
-		                        	            </td>
-		                        	        </tr>
-		                        	    </tbody>
-		                        	</table>
-		                        </div>
-
-		                        <a href="change_password.html" target="_blank" id="change_password" class="btn btn-primary">Change password</a>
-
-		                        <br>
+    ?>
 
 
-		                        <!--Social Icons-->
-		                        <ul class="inline-ul">
-		                            <li><a class="icons-sm fb-ic"><i class="fa fa-facebook"></i></a></li>
-		                            <li><a class="icons-sm tw-ic"><i class="fa fa-twitter"> </i></a></li>
-		                        </ul>
+    <div id="account" class="container">
 
-		                        <!--Triggering button-->
-		                        <a class="rotate-btn" data-card="card-1"><i class="fa fa-undo"></i> Click here to rotate back</a>
+                <!--First column-->
+                <div class="col-sm-8">
 
-		                    </div>
-		                    <!--/.Back Side-->
+                    <!--Rotating card-->
+                    <div class="card card-block" align="center">
+                        <div>
 
-		                </div>
-		            </div>
-		            <!--/.Rotating card-->
-		        </div>
-		        <!--/First column-->   
+                            <?php
 
-		    </div>
+                                if($_SESSION['login_type']=="student"){
 
-		</section>
-	</div>
+                                    $student_id = $_SESSION['login_id'];
+                                    $sql = "SELECT * FROM student WHERE student_id='$student_id'";
+                                }
+
+                                else{
+
+                                    $user_id = $_SESSION['login_id'];
+                                    $sql = "SELECT * FROM user WHERE user_id='$user_id'";
+                                }
+
+                                $result = mysqli_query($connection, $sql);
+                                $row = mysqli_fetch_assoc($result);
+
+
+                            ?>
+                                <!--Content-->
+                                <h4><strong>About User</strong></h4>
+                            
+                                
+                                <div class="table-responsive">
+                                    <table class="table">
+
+                                        <tbody>
+
+                                            <tr>
+                                                <td>Name</td>
+                                                <td><?php echo $row['name']?></td>
+                                                <td>
+                                                    <a class="teal-text"><i class="fa fa-pencil"></i></a>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Email</td>
+                                                <td><?php echo $row['email']?></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Contact No.</td>
+                                                <td><?php echo $row['contact']?></td>
+                                                <td>
+                                                    <a class="teal-text"><i class="fa fa-pencil"></i></a>
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <a href="change_password.php" id="change_password" class="btn btn-primary">Change password</a>
+                        </div>
+                    </div>
+                    <!--/.Rotating card-->
+                </div>
+                <!--/First column-->   
+    </div>
+
+
+
+    <!--Footer-->
+    <footer class="my-footer container-fluid">
+
+        <!--Copyright-->
+            <div class="flex-center">
+                © 2016 Copyright - IITDU
+            </div>
+        <!--/.Copyright-->
+
+    </footer>
+    <!--/.Footer-->
+
 
     <!-- SCRIPTS -->
 
@@ -144,6 +144,10 @@
 
     <!-- Jquery Preloader Plugin -->
     <script type="text/javascript" src="js/jquery.preloader.min.js"></script>
+
+    <!-- Header and Preloader Js -->
+    <script type="text/javascript" src="js/header.js"></script>
+
 
 </body>
 
