@@ -2,175 +2,193 @@
 <html lang="en">
 
 <head>
+
     <!-- Required meta tags always come first -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>CMS | IITDU | Teacher</title>
+    <title>CMS | IITDU</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
 
+    <!-- CSS -->
+
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Material Design Bootstrap -->
-    <link href="css/mdb.min.css" rel="stylesheet">
+    <link href="../css/mdb.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
 
 </head>
 
-<body>
+<body class="fixed-sn blue-skin index-body">
 
-	<div id="teacher_list" class="container-fluid">
-		<div class="row">
-			<div class="col-sm-8">
-				<div class="card">
-					<div class="card-block">
+    <?php
 
-						<h3>Teacher's List</h3>
+        session_start();
 
-						<div class="table-responsive">
-							<table class="table table-hover">
-							  <thead>
-							    <tr>
-							      <th>#</th>
-							      <th>Name</th>
-							      <th>Email</th>
-							    </tr>
-							  </thead>
-							  <tbody>
-							    <tr>
-							      <th scope="row">1</th>
-							      <td>Amit Seal Amit</td>
-							      <td>amit@iit.du.ac.bd</td>
-							    </tr>
-							    <tr>
-							      <th scope="row">2</th>
-							      <td>Alim Ul Gias</td>
-							      <td>alim@iit.du.ac.bd</td>
-							    </tr>
-							    <tr>
-							      <th scope="row">3</th>
-							      <td>Zafar</td>
-							      <td>zafar@gmail.com</td>
-							    </tr>
-							  </tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-sm-4">
-				<div class="card">
-				    <div class="card-block">
+        if (!isset($_SESSION['login_id'])) {
+            header ("Location: http://localhost:8080/cms/login.php");
+        }
 
-				        <!--Header-->
-				        <div>
-				        	<h3>Add new teacher</h3>
-				        </div>
+        elseif ($_SESSION['login_type']!="admin") {
+            header ("Location: http://localhost:8080/cms/");
+        }
+    ?>
 
-				        <!--Body-->
+    <?php
 
-				        <div class="md-form">
-				            <input type="text" id="teacher_name" class="form-control">
-				            <label for="teacher_name">Name</label>
-				        </div>
+        include '../connect/connect.php';
+        include '../header/header.php';
 
-				        <div class="md-form">
-				            <input type="text" id="teacher_email1" class="form-control">
-				            <label for="teacher_email1">Email</label>
-				        </div>
+    ?>
 
-				        <div class="text-xs-center">
-				            <button class="btn btn-success btn-block"><i class="fa fa-plus" aria-hidden="true"></i></button>
-				        </div>
+    <div id="teacher_list" class="container-fluid">
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="card">
+                    <div class="card-block">
 
-				    </div>
-				</div>
+                        <h3 class="flex-center">Teacher's List</h3>
+                        
+                        <span id="list"></span>
 
-				<div class="card">
-				    <div class="card-block">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-block">
 
-				        <!--Header-->
-				        <div>
-				        	<h3>Remove teahcer</h3>
-				        </div>
+                        <!--Header-->
+                        <div>
+                            <h3>Add new teacher</h3>
+                        </div>
 
-				        <!--Body-->
+                        <!--Body-->
 
-				        <div class="md-form">
-				            <input type="text" id="teacher_email2" class="form-control">
-				            <label for="teacher_email2">Email</label>
-				        </div>
+                        <div class="md-form">
+                            <input type="text" id="add_teacher_name" class="form-control" name="add_teacher_name">
+                            <label for="add_teacher_name">Name</label>
+                        </div>
 
-				        <div class="text-xs-center">
-				            <button class="btn btn-danger btn-block"><i class="fa fa-minus" aria-hidden="true"></i></button>
-				        </div>
+                        <div class="md-form">
+                            <input type="text" id="add_teacher_email" class="form-control" name="add_teacher_email">
+                            <label for="add_teacher_email">Email</label>
+                        </div>
 
-				    </div>
-				</div>
+                        <div class="text-xs-center">
+                            <button class="btn btn-success btn-block" onclick="add_teacher()"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                        </div>
 
-				<div class="card">
-				    <div class="card-block">
+                    </div>
+                </div>
 
-				        <!--Header-->
-				        <div>
-				        	<h3>Assign teacher to course</h3>
-				        </div>
+                <div class="card">
+                    <div class="card-block">
 
-				        <!--Body-->
+                        <!--Header-->
+                        <div>
+                            <h3>Remove teahcer</h3>
+                        </div>
 
-				        <div class="md-form">
-				            <select class="custom-select">
-						    	<option selected>Select course</option>
-						  		<option value="1">Course One</option>
-						  		<option value="2">Course Two</option>
-						  		<option value="3">Course Three</option>
-				            </select>
-				        </div>
+                        <!--Body-->
 
-				        <div class="md-form">
-				            <select class="custom-select">
-						    	<option selected>Select teacher</option>
-						  		<option value="1">Amit</option>
-						  		<option value="2">Abir</option>
-						  		<option value="3">Rayhan</option>
-				            </select>
-				        </div>
-				      
-				        <div class="text-xs-center">
-				            <button class="btn btn-primary btn-block">Assign</button>
-				        </div>
+                        <div class="md-form">
+                            <input type="text" id="remove_teacher_email" class="form-control" name="remove_teacher_email">
+                            <label for="remove_teacher_email">Email</label>
+                        </div>
 
-				    </div>
-				</div>
-			</div>
-		</div>
-	</div>
+                        <div class="text-xs-center">
+                            <button class="btn btn-danger btn-block" onclick="remove_teacher()"><i class="fa fa-minus" aria-hidden="true"></i></button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Footer-->
+    <footer class="my-footer container-fluid">
+
+        <!--Copyright-->
+            <div class="flex-center">
+                © 2016 Copyright - IITDU
+            </div>
+        <!--/.Copyright-->
+
+    </footer>
+    <!--/.Footer-->
+
 
     <!-- SCRIPTS -->
 
-    <script type="text/javascript">
-    	$(document).ready(function() {
-    	   $('.mdb-select').material_select();
-    	 });
-    </script>
-
     <!-- JQuery -->
-    <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
+    <script type="text/javascript" src="../js/jquery-2.2.3.min.js"></script>
 
     <!-- Tooltips -->
-    <script type="text/javascript" src="js/tether.min.js"></script>
+    <script type="text/javascript" src="../js/tether.min.js"></script>
 
     <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
 
     <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="js/mdb.min.js"></script>
+    <script type="text/javascript" src="../js/mdb.min.js"></script>
 
     <!-- Jquery Preloader Plugin -->
-    <script type="text/javascript" src="js/jquery.preloader.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.preloader.min.js"></script>
+
+    <!-- Header and Preloader Js -->
+    <script type="text/javascript" src="../js/header.js"></script>
+
+    <!-- Validator Js -->
+    <script type="text/javascript" src="../js/validator.js"></script>
+        
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+            view_list();
+        });
+
+        function view_list(){
+            $.post("helper/view_teacher.php",{},function(result){
+                $('#list').html(result);
+            });
+        }
+
+        function add_teacher(){
+
+            var name = $('#add_teacher_name').val().replace(/ +(?= )/g,'');
+            var email = $('#add_teacher_email').val();
+
+            var validation = teacher_add_validation(name, email);
+
+            if(validation!=true){
+
+                toastr.info(validation);
+                return false;
+            }
+
+            $.post("helper/add_teacher.php", {name:name,email:email}, function(result){
+                toastr.info(result);
+                view_list();
+            });
+        }
+
+        function remove_teacher(){
+
+            var email = $('#remove_teacher_email').val();
+
+            $.post("helper/remove_teacher.php", {email:email}, function(result){
+                toastr.info(result);
+                view_list();
+            });
+        }
+
+    </script>
 
 </body>
 
